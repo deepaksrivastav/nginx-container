@@ -39,7 +39,6 @@ RUN useradd default -u 1001 -m && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all && \
-    sed -i -f /opt/app-root/nginxconf.sed /etc/opt/rh/rh-nginx18/nginx/nginx.conf && \
     mkdir -p /opt/app-root/etc/nginx.d/ && \
     chmod -R a+rwx /opt/app-root/etc && \
     chmod -R a+rwx /var/opt/rh/rh-nginx18 && \
