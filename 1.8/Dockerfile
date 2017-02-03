@@ -30,7 +30,8 @@ RUN yum install -y yum-utils && \
     INSTALL_PKGS="nss_wrapper bind-utils gettext hostname rh-nginx18 rh-nginx18-nginx" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum clean all
+    yum clean all && \
+    mkdir -p /opt/app-root/etc/nginx.d
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
@@ -43,13 +44,15 @@ COPY ./contrib/ /opt/app-root
 # writeable as OpenShift default security model is to run the container under
 # random UID.
 RUN sed -i -f /opt/app-root/nginxconf.sed /etc/opt/rh/rh-nginx18/nginx/nginx.conf && \
-    mkdir -p /opt/app-root/etc/nginx.d/ && \
     chmod -R a+rwx /opt/app-root/etc && \
     chmod -R a+rwx /var/opt/rh/rh-nginx18 && \
     chown -R 1001:0 /opt/app-root && \
     chown -R 1001:0 /var/opt/rh/rh-nginx18
 
 USER 1001
+
+VOLUME ["/opt/rh/rh-nginx18/root/usr/share/nginx/html"]
+VOLUME ["/var/opt/rh/rh-nginx18/log/nginx/"]
 
 ENV BASH_ENV=/opt/app-root/etc/scl_enable \
     ENV=/opt/app-root/etc/scl_enable \
