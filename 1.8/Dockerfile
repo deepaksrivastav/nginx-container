@@ -23,7 +23,8 @@ LABEL com.redhat.component="rh-nginx18-docker" \
 
 ENV NGINX_CONFIGURATION_PATH=/opt/app-root/etc/nginx.d
 
-RUN yum install -y yum-utils && \
+RUN useradd default -u 1001 -m && \
+    yum install -y yum-utils && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
     yum-config-manager --enable rhel-7-server-optional-rpms && \
     yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \
