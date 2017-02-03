@@ -31,7 +31,7 @@ RUN yum install -y yum-utils && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all && \
-    mkdir -p /opt/app-root/etc/nginx.d && \
+    mkdir -p /opt/app-root/etc/nginx.d
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
