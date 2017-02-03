@@ -23,6 +23,13 @@ LABEL com.redhat.component="rh-nginx18-docker" \
 
 ENV NGINX_CONFIGURATION_PATH=/opt/app-root/etc/nginx.d
 
+# Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
+COPY ./s2i/bin/ $STI_SCRIPTS_PATH
+
+# Each language image can have 'contrib' a directory with extra files needed to
+# run and build the applications.
+COPY ./contrib/ /opt/app-root
+
 RUN useradd default -u 1001 -m && \
     yum install -y yum-utils && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
@@ -39,12 +46,6 @@ RUN useradd default -u 1001 -m && \
     chown -R 1001:0 /opt/app-root && \
     chown -R 1001:0 /var/opt/rh/rh-nginx18
 
-# Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
-COPY ./s2i/bin/ $STI_SCRIPTS_PATH
-
-# Each language image can have 'contrib' a directory with extra files needed to
-# run and build the applications.
-COPY ./contrib/ /opt/app-root
 
 USER 1001
 
