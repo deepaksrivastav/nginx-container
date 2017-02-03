@@ -39,7 +39,6 @@ RUN useradd default -u 1001 -m && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all && \
-    mkdir -p /opt/app-root/etc/nginx.d/ && \
 
 USER 1001
 
