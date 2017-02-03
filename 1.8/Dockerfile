@@ -40,11 +40,6 @@ RUN useradd default -u 1001 -m && \
     rpm -V $INSTALL_PKGS && \
     yum clean all && \
     mkdir -p /opt/app-root/etc/nginx.d/ && \
-    chmod -R a+rwx /opt/app-root/etc && \
-    chmod -R a+rwx /var/opt/rh/rh-nginx18 && \
-    chown -R 1001:0 /opt/app-root && \
-    chown -R 1001:0 /var/opt/rh/rh-nginx18
-
 
 USER 1001
 
