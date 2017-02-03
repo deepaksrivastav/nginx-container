@@ -32,7 +32,6 @@ RUN yum install -y yum-utils && \
     rpm -V $INSTALL_PKGS && \
     yum clean all && \
     mkdir -p /opt/app-root/etc/nginx.d && \
-    sed -i -f /opt/app-root/nginxconf.sed /etc/opt/rh/rh-nginx18/nginx/nginx.conf
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
@@ -44,10 +43,11 @@ COPY ./contrib/ /opt/app-root
 # In order to drop the root user, we have to make some directories world
 # writeable as OpenShift default security model is to run the container under
 # random UID.
-RUN chmod -R a+rwx /opt/app-root/etc && \
-    chmod -R a+rwx /var/opt/rh/rh-nginx18 && \
-    chown -R 1001:0 /opt/app-root && \
-    chown -R 1001:0 /var/opt/rh/rh-nginx18
+#RUN sed -i -f /opt/app-root/nginxconf.sed /etc/opt/rh/rh-nginx18/nginx/nginx.conf
+#    chmod -R a+rwx /opt/app-root/etc && \
+#    chmod -R a+rwx /var/opt/rh/rh-nginx18 && \
+#    chown -R 1001:0 /opt/app-root && \
+#    chown -R 1001:0 /var/opt/rh/rh-nginx18
 
 USER 1001
 
